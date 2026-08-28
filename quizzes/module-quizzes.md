@@ -17,6 +17,12 @@
 7. 最大步数预算属于哪一层责任？它解决什么、不解决什么？
 8. 给“创建任务”工具写一个可判别描述，并列出三个不应调用的场景。
 
+### DeepSeek API 实践补充
+
+A. 为什么 `response_format={"type":"json_object"}` 仍不能替代宿主的业务校验？
+B. thinking + tools 的多轮调用中，Adapter 若丢失 `reasoning_content` 会破坏哪条协议要求？
+C. ScriptedModel、Fake Client 和 Live Test 分别验证什么？
+
 ## 模块二：MCP、Skill 与 Framework（第 5–8 讲）
 
 9. MCP 中维护与单个 Server 协议连接的是：

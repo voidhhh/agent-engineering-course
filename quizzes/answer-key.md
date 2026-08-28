@@ -13,6 +13,12 @@
 7. 属于 Loop/Harness 控制；限制失控循环与成本，但不保证步骤正确、安全或任务成功。
 8. 示例：“创建一个本地待办并返回 ID；仅在用户明确要求新增待办时使用。”不用于列出、修改、外部发送。
 
+### DeepSeek API 实践补充
+
+A. JSON Output 只约束 JSON 语法；字段语义、权限、范围、租户和副作用条件仍由可信宿主验证。
+B. DeepSeek 要求带 tools 的后续请求完整回传前序 `reasoning_content`；丢失后可能返回 400，也会中断该轮推理连续性。
+C. ScriptedModel 验证 Loop；Fake Client 验证 Adapter 映射；Live Test 验证当前远端服务、模型与 SDK 的兼容性。
+
 ## 模块二
 
 9. B。

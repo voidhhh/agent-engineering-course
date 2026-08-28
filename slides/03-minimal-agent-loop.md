@@ -35,6 +35,16 @@ title: 最小 Agent Loop
 
 ---
 
+## 三层模型测试
+
+1. ScriptedModel：Loop 状态与预算
+2. Fake Client：Provider Adapter 映射
+3. DeepSeek Live：当前服务兼容性与用量
+
+只有第三层需要 Key、网络和费用。
+
+---
+
 ## 实验
 
-跑通两步工具调用；再注入未知工具与无限调用，观察终态。
+跑通离线两步工具调用，再用同一 Loop 接入 `DeepSeekChatAdapter`。

@@ -34,9 +34,31 @@ Tool Calling 不是模型真的执行了函数。模型只是生成一个带有�
 
 常见问题包括不存在的工具、缺少必填参数、错误类型、注入额外字段、重复调用、结果过大、工具执行成功但结果回送失败，以及模型在工具失败后反复重试。解决方式来自宿主：严格验证、幂等键、预算、错误分类和结果裁剪。
 
+## 6. 从内部 Schema 到真实 DeepSeek API
+
+课程内部用扁平结构表达函数工具：`type/name/description/parameters`。DeepSeek 的
+OpenAI 兼容接口要求把后三项放进 `function` 对象。这个转换属于 Model Adapter，
+不应散落在 Loop 或业务工具中。
+
+当前课程基线使用 `https://api.deepseek.com` 与 `deepseek-v4-flash` /
+`deepseek-v4-pro`。旧教程常见的 `deepseek-chat`、`deepseek-reasoner` 已退出当前
+基线，不能直接复制。真实实验还要区分：
+
+- `tool_choice=auto` 允许模型自行决定；
+- `tool_choice=required` 强制至少一次工具调用；
+- 模型生成合法 JSON 不等于业务参数安全；
+- thinking + tools 的后续请求必须回传 `reasoning_content`；
+- JSON Output 保证 JSON 语法，不替代业务 Schema 校验。
+
+`DeepSeekChatAdapter` 将提供商 Tool Call 归一化为 `ToolCall(id, name,
+arguments)`。宿主随后仍要执行名称查找、参数验证、审批、幂等和错误归一化。
+
 ## 实验
 
 使用 `ToolSpec` 和 `ToolRegistry` 实现 `add_numbers`、`add_task`、`list_tasks`。分别构造缺失字段、额外字段、错误类型和重复调用编号，观察验证与缓存行为。
+
+完成离线实验后运行[实验 01B](../labs/01b-deepseek-api.md)，用同一工具比较 Fake
+Client 与真实 DeepSeek API 的请求、响应和失败差异。
 
 ## 验收标准
 

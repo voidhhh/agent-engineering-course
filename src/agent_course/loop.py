@@ -84,18 +84,20 @@ class AgentLoop:
                 state.session_id,
                 finish_reason=turn.finish_reason,
                 tool_count=len(turn.tool_calls),
+                usage=turn.usage,
             )
             if turn.tool_calls:
-                state.messages.append(
-                    {
-                        "role": "assistant",
-                        "content": turn.content or "",
-                        "tool_calls": [
-                            {"id": call.id, "name": call.name, "arguments": call.arguments}
-                            for call in turn.tool_calls
-                        ],
-                    }
-                )
+                assistant_message: dict[str, Any] = {
+                    "role": "assistant",
+                    "content": turn.content or "",
+                    "tool_calls": [
+                        {"id": call.id, "name": call.name, "arguments": call.arguments}
+                        for call in turn.tool_calls
+                    ],
+                }
+                if turn.reasoning is not None:
+                    assistant_message["reasoning"] = turn.reasoning
+                state.messages.append(assistant_message)
                 pending: list[ToolCall] = []
                 for call in turn.tool_calls:
                     try:

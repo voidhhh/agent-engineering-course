@@ -6,6 +6,7 @@
 |---|---|---:|---|---|
 | MCP Python SDK |  |  |  |  |
 | OpenAI Agents SDK |  |  |  |  |
+| DeepSeek API model / SDK |  |  |  | Base URL、model、thinking、effort |
 | Hermes Agent |  |  |  |  |
 | OpenClaw |  |  |  |  |
 | DeepSeek Harness |  |  |  |  |

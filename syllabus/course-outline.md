@@ -10,20 +10,21 @@
 
 1. 准确区分 Model、Agent、Workflow、Tool、MCP、Skill、Framework 与 Harness；
 2. 独立实现具备 Tool Calling、终止预算和错误归一化的 Agent Loop；
-3. 构建并调试 stdio 与 Streamable HTTP MCP Server/Client；
-4. 编写、触发、评测和维护符合 Agent Skills 规范的 Skill；
-5. 设计 Context、Session、Memory、Checkpoint 与 Event Trace；
-6. 实现审批策略、幂等调用、超时恢复、并发隔离和最小权限控制；
-7. 从源码和运行轨迹分析 Hermes Agent、OpenClaw 与 DeepSeek Harness；
-8. 用控制变量和统一任务集比较模型与 Harness，而不是凭主观体验下结论。
+3. 用 Adapter 将真实 DeepSeek API 接入统一 Loop，并分离离线测试与付费 Live Test；
+4. 构建并调试 stdio 与 Streamable HTTP MCP Server/Client；
+5. 编写、触发、评测和维护符合 Agent Skills 规范的 Skill；
+6. 设计 Context、Session、Memory、Checkpoint 与 Event Trace；
+7. 实现审批策略、幂等调用、超时恢复、并发隔离和最小权限控制；
+8. 从源码和运行轨迹分析 Hermes Agent、OpenClaw 与 DeepSeek Harness；
+9. 用控制变量和统一任务集比较模型与 Harness，而不是凭主观体验下结论。
 
 ## 三、讲次安排
 
 | 讲次 | 主题 | 原理解构 | 实验交付 |
 |---:|---|---|---|
 | 1 | Agent 系统全景 | 分层、责任边界、数据流 | 系统分层图 |
-| 2 | Tool Calling | JSON Schema、选择、参数、结果回送 | 三个函数工具 |
-| 3 | 最小 Agent Loop | 推理—行动—观察、停止条件 | 离线可测循环 |
+| 2 | Tool Calling | JSON Schema、Provider 映射、参数、结果回送 | 函数工具 + DeepSeek API |
+| 3 | 最小 Agent Loop | 推理—行动—观察、Adapter、停止条件 | 离线循环 + Live 对照 |
 | 4 | 工具工程 | 描述、验证、错误、幂等、超时 | 工具契约测试 |
 | 5 | MCP 架构 | Host/Client/Server、JSON-RPC、能力协商 | 协议时序分析 |
 | 6 | MCP 实现 | 原语、传输、应用 Adapter、权限边界 | REST/Qt/CLI MCP 集成 |
@@ -53,8 +54,8 @@
 
 整个课程只维护一个“本地知识与任务助理”：
 
-1. 第 2 讲把领域能力实现为 Python 函数；
-2. 第 3～4 讲让模型可靠调用这些函数；
+1. 第 2 讲把领域能力实现为 Python 函数，并用 DeepSeek API 返回真实 Tool Call；
+2. 第 3～4 讲用同一 Loop 对照 ScriptedModel、Fake Client 和真实模型；
 3. 第 5～6 讲将能力迁移到 MCP；
 4. 第 7 讲将研究流程写成 Skill；
 5. 第 8～11 讲加入框架、状态和 Harness；

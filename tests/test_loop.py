@@ -31,6 +31,10 @@ def test_loop_executes_tool_and_finishes() -> None:
         "model.responded",
         "run.completed",
     ]
+    responded = [
+        event for event in harness.trace("s1") if event.kind == "model.responded"
+    ]
+    assert responded[0].payload["usage"] == {}
 
 
 def test_write_tool_pauses_and_resumes_after_approval() -> None:

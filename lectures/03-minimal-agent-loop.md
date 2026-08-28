@@ -18,9 +18,21 @@
 
 ## 3. 模型适配器
 
-不同提供商返回不同对象。Harness 应尽早归一化为 `ModelTurn(content, tool_calls, finish_reason, usage)`。后续 Loop 不应散布提供商字段，否则更换模型会修改策略、Trace 和测试。
+不同提供商返回不同对象。Harness 应尽早归一化为
+`ModelTurn(content, reasoning, tool_calls, finish_reason, usage)`。后续 Loop 不应散布
+提供商字段，否则更换模型会修改策略、Trace 和测试。Trace 记录结构化 Token 用量，
+但不默认记录 reasoning 正文。
 
 离线 `ScriptedModel` 是重要教学工具。它允许固定每一轮返回，准确测试工具调用、暂停、错误和步数预算，而不受模型随机性和网络影响。
+
+真实 API Adapter 还承担协议翻译，而不是只替换 URL：工具 Schema 形状、Tool Call
+参数、结束原因、Token 用量和中间推理字段都需要归一化。DeepSeek thinking 模式在
+带工具的多轮请求中要求回传 `reasoning_content`；核心 Loop 将其保存为通用
+`ModelTurn.reasoning`，由 Adapter 再映射回提供商字段。
+
+课程采用三层测试：`ScriptedModel` 验证 Loop；Fake Client 验证 Adapter；显式 Live
+Test 验证当前服务。只有第三层需要 Key、网络和费用，且其随机结果不能成为核心 CI
+唯一通过条件。
 
 ## 4. 终止条件
 
@@ -33,6 +45,9 @@
 ## 实验
 
 阅读 `src/agent_course/loop.py`，用 ScriptedModel 构造“调用加法工具—观察结果—给出答案”。随后构造永远调用 `list_tasks` 的模型，验证第二步后以预算错误结束。
+
+再阅读 `src/agent_course/deepseek.py`，运行[实验 01B](../labs/01b-deepseek-api.md)，
+证明更换模型提供商不需要修改 `AgentLoop`。
 
 ## 反思
 

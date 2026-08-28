@@ -44,6 +44,22 @@
 7. [Codex as an Open Agent Harness](https://developers.openai.com/blog/codex-as-a-platform)
 8. [Effective Harnesses for Long-Running Agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
 
+## 4.1 DeepSeek API
+
+1. [Your First API Call](https://api-docs.deepseek.com/)
+2. [Models and Pricing](https://api-docs.deepseek.com/quick_start/pricing/)
+3. [Chat Completions API](https://api-docs.deepseek.com/api/create-chat-completion/)
+4. [Responses API](https://api-docs.deepseek.com/guides/responses_api/)
+5. [Thinking Mode](https://api-docs.deepseek.com/guides/thinking_mode/)
+6. [Tool Calls](https://api-docs.deepseek.com/guides/tool_calls/)
+7. [JSON Output](https://api-docs.deepseek.com/guides/json_mode/)
+8. [Error Codes](https://api-docs.deepseek.com/quick_start/error_codes/)
+9. [Rate Limit and Isolation](https://api-docs.deepseek.com/quick_start/rate_limit/)
+10. [Change Log](https://api-docs.deepseek.com/updates/)
+
+阅读时以当前模型名和变更记录为准。旧博客中的 `deepseek-chat`、
+`deepseek-reasoner` 不作为 2026-08 课程配置依据。
+
 ## 5. Hermes
 
 1. [Hermes 4 Technical Report](https://arxiv.org/abs/2508.18255)

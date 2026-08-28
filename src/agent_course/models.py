@@ -20,6 +20,7 @@ class ModelTurn:
     """One normalized model response consumed by the Agent loop."""
 
     content: str | None = None
+    reasoning: str | None = None
     tool_calls: tuple[ToolCall, ...] = field(default_factory=tuple)
     finish_reason: str = "stop"
     usage: dict[str, int] = field(default_factory=dict)

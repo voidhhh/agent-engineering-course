@@ -5,6 +5,7 @@
 | 实验 | 对应讲次 | 核心交付 |
 |---|---:|---|
 | [01 Tool 与 Loop](01-tool-loop.md) | 2–4 | 可测工具契约与最小循环 |
+| [01B DeepSeek 真实 API](01b-deepseek-api.md) | 2–3 | Chat/Stream/JSON/Tool Calling + Adapter |
 | [02 MCP Server/Client](02-mcp.md) | 5–6 | stdio 服务、资源与调用证据 |
 | [02B MCP 调用自研应用](02b-mcp-app-integration.md) | 6 | REST、Qt、CLI 三类 Adapter |
 | [03 Agent Skill](03-skill.md) | 7 | `research-brief` 与触发 Eval |
@@ -28,3 +29,4 @@
 3. 外部发送、删除、安装和 shell 操作必须显式审批；
 4. 实验结束移除容器、测试凭据、后台进程和持久数据；
 5. 快速变化的项目以固定 tag/commit 重现，不使用无版本的“latest”作结论。
+6. Live API 测试默认跳过，必须通过环境变量显式启用并设置费用上限。

@@ -34,6 +34,16 @@ title: Tool Calling
 
 ---
 
+## DeepSeek 真实接口映射
+
+- 内部 Schema → OpenAI 兼容 Function Tool
+- `tool_choice`: auto / required
+- Tool Call JSON 仍需宿主验证
+- thinking + tools 回传 reasoning state
+- 旧 model alias 不进入 2026 课程基线
+
+---
+
 ## 实验
 
-实现 `add_numbers`、`add_task`、`list_tasks`，分别测试正常、边界和恶意参数。
+先用 Fake Client 验证 Adapter，再显式启用 DeepSeek Live Test；两层证据不能互相替代。

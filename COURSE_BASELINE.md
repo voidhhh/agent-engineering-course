@@ -8,6 +8,17 @@
 - Agent Skills：以 `agentskills.io/specification` 的公开规范为格式基线。
 - Python：建议 3.11 或更高版本；核心 Mini Harness 只依赖标准库。
 - 测试：pytest；所有默认测试必须离线、确定性运行。
+- DeepSeek API：Base URL 为 `https://api.deepseek.com`；课程模型名固定为
+  `deepseek-v4-flash`、`deepseek-v4-pro`，并以 OpenAI 兼容 Chat Completions /
+  Responses API 为接口基线。
+
+DeepSeek 官方变更记录显示，旧名称 `deepseek-chat`、`deepseek-reasoner` 已在
+2026-07-24 后停止作为当前模型入口使用。课程案例不得沿用旧教程的模型名。V4
+thinking 默认开启，使用 `thinking.type` 和 `reasoning_effort=low/high/max` 控制；
+thinking + tools 的后续请求必须保留 `reasoning_content`。
+
+真实 API 测试必须满足：Key 仅来自环境变量；`.env` 不入库；默认 CI 跳过 Live
+Test；使用专用低额度 Key；记录模型、时间、Token 与脱敏 Trace。
 
 ## 快速演进项目
 

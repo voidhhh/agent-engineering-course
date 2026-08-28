@@ -27,6 +27,17 @@ agent-course-demo
 
 默认测试使用确定性的 `ScriptedModel`，不需要 API Key，也不会访问网络。MCP、OpenAI Agents SDK、Hermes Agent、OpenClaw 和 DeepSeek Harness 实验均为可选扩展，按各实验说明单独安装。
 
+课程另提供真实 DeepSeek API 案例，覆盖 Chat Completions、Responses API 流式输出、
+JSON Output，以及 DeepSeek + Mini Harness + Tool Calling。API Key 只从环境变量读取，
+默认测试不会调用外部模型：
+
+```bash
+python -m pip install -e ".[dev,deepseek]"
+cp .env.example .env
+# 仅在本机把占位符替换为真实 Key，再加载环境变量
+python -m examples.deepseek_api.demo chat "解释 Agent Loop"
+```
+
 MCP 进阶部分包含三种自研应用 Adapter：REST 任务软件、Qt 桌面笔记软件和 CLI 报告软件。安装 MCP 可选依赖后，可一次性运行无外部服务的端到端 Smoke Test：
 
 ```bash
@@ -43,6 +54,7 @@ python -m examples.app_integration.smoke
 - [16 讲讲义](lectures/README.md)
 - [实验手册](labs/README.md)
 - [MCP 调用自研应用实例](examples/app_integration/README.md)
+- [DeepSeek 真实 API 实例](examples/deepseek_api/README.md)
 - [幻灯片讲稿](slides/README.md)
 - [官方资料索引](references/official-reading-list.md)
 - [评测说明](evals/README.md)
@@ -76,6 +88,7 @@ agent-engineering-course/
 3. **失败路径是一等内容。** 超时、重复调用、越权、上下文膨胀和中断恢复都必须进入实验。
 4. **固定版本，记录证据。** 具体产品实验应记录版本、配置、任务集、原始轨迹与评分脚本。
 5. **区分事实、项目主张和实验结论。** 不用宣传语代替可复现实验。
+6. **分离离线与 Live 测试。** 核心 CI 不依赖 Key；付费 API 调用必须显式启用并记录用量。
 
 ## 授权说明
 

@@ -61,9 +61,25 @@ def validate_local_links() -> None:
                 )
 
 
+def validate_live_api_safety() -> None:
+    env_example = (ROOT / ".env.example").read_text(encoding="utf-8")
+    expected = "DEEPSEEK_API_KEY=replace-with-your-deepseek-api-key"
+    if expected not in env_example:
+        raise SystemExit(".env.example must contain only the documented DeepSeek key placeholder")
+
+    ignore_entries = {
+        line.strip()
+        for line in (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    }
+    if ".env" not in ignore_entries:
+        raise SystemExit(".gitignore must ignore .env before live API labs are enabled")
+
+
 def main() -> None:
     required = [
         "README.md",
+        ".env.example",
         "COURSE_BASELINE.md",
         "syllabus/course-outline.md",
         "syllabus/teaching-guide.md",
@@ -72,6 +88,7 @@ def main() -> None:
         "slides/README.md",
         "labs/README.md",
         "labs/02b-mcp-app-integration.md",
+        "labs/01b-deepseek-api.md",
         "references/official-reading-list.md",
         "examples/app_integration/README.md",
         "examples/app_integration/rest_tasks/app.py",
@@ -80,6 +97,11 @@ def main() -> None:
         "examples/app_integration/qt_notes/mcp_server.py",
         "examples/app_integration/cli_reports/report_app.py",
         "examples/app_integration/cli_reports/mcp_server.py",
+        "examples/deepseek_api/README.md",
+        "examples/deepseek_api/demo.py",
+        "src/agent_course/deepseek.py",
+        "tests/test_deepseek_adapter.py",
+        "tests/test_deepseek_live.py",
         "quizzes/module-quizzes.md",
         "quizzes/answer-key.md",
         "midterm/README.md",
@@ -112,6 +134,7 @@ def main() -> None:
     if total_cases < 30:
         raise SystemExit(f"expected at least 30 eval cases, found {total_cases}")
     validate_local_links()
+    validate_live_api_safety()
     print(f"course validation passed: 16 lectures, 16 decks, {total_cases} eval cases")
 
 
