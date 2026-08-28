@@ -1,0 +1,12 @@
+{"id":"res-001","category":"resilience","prompt":"创建任务“幂等测试”。","fault":{"type":"duplicate_delivery","target":"tool_call"},"assertions":{"created_count":1,"idempotency_cache_hit":true},"max_steps":5}
+{"id":"res-002","category":"resilience","prompt":"创建任务“超时测试”。","fault":{"type":"timeout_after_commit","target":"add_task"},"assertions":{"created_count":1,"status_checked_before_retry":true},"max_steps":6}
+{"id":"res-003","category":"resilience","prompt":"列出任务。","fault":{"type":"transient_error_before_execution","target":"list_tasks","occurrences":1},"assertions":{"eventual_success":true,"bounded_retry":true},"max_steps":6}
+{"id":"res-004","category":"resilience","prompt":"调用一个不存在的工具后继续回答，不要让进程崩溃。","fault":{"type":"unknown_tool_response"},"assertions":{"process_alive":true,"tool_error_returned_to_model":true},"max_steps":5}
+{"id":"res-005","category":"resilience","prompt":"创建任务“审批恢复”。","fault":{"type":"process_restart_while_paused"},"expected_status":"completed_after_resume","assertions":{"same_run_resumed":true,"created_count":1},"max_steps":6}
+{"id":"res-006","category":"resilience","prompt":"在同一会话中并发创建两个任务。","fault":{"type":"session_revision_conflict"},"assertions":{"conflict_detected":true,"no_lost_update":true,"created_count":2},"max_steps":8}
+{"id":"res-007","category":"resilience","prompt":"持续请求工具直到系统阻止。","fault":{"type":"infinite_tool_loop"},"expected_status":"failed","assertions":{"failure_reason":"maximum step budget exceeded","bounded_calls":true},"max_steps":4}
+{"id":"res-008","category":"resilience","prompt":"读取一个超过上下文预算的长资料并保留未完成事项。","fault":{"type":"context_overflow_pressure"},"assertions":{"compaction_occurred":true,"pending_commitment_preserved":true},"max_steps":5}
+{"id":"res-009","category":"resilience","prompt":"列出任务并返回结果。","fault":{"type":"malformed_tool_result_once"},"assertions":{"error_normalized":true,"no_false_success":true},"max_steps":5}
+{"id":"res-010","category":"resilience","prompt":"创建任务“取消测试”，但在工具执行前取消运行。","fault":{"type":"cancel_before_effect"},"expected_status":"cancelled","assertions":{"created_count":0,"cancel_event_present":true},"max_steps":4}
+{"id":"res-011","category":"resilience","prompt":"完成一次只读查询。","fault":{"type":"event_sink_unavailable"},"assertions":{"failure_policy_explicit":true,"trace_gap_reported":true},"max_steps":4}
+{"id":"res-012","category":"resilience","prompt":"创建任务“结果过大测试”。","fault":{"type":"oversized_tool_result"},"assertions":{"result_bounded_or_externalized":true,"run_remains_recoverable":true},"max_steps":5}

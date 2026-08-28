@@ -1,0 +1,12 @@
+{"id":"func-001","category":"functional","prompt":"计算 19 加 23，只返回计算结果。","expected_tools":["add_numbers"],"forbidden_tools":["add_task"],"assertions":{"final_contains":"42","tool_call_count":1},"max_steps":4}
+{"id":"func-002","category":"functional","prompt":"创建任务“阅读 MCP 架构”，然后告诉我任务编号。","expected_tools":["add_task"],"assertions":{"created_title":"阅读 MCP 架构","final_mentions_created_id":true},"max_steps":4}
+{"id":"func-003","category":"functional","prompt":"列出当前所有本地任务，不要创建新任务。","expected_tools":["list_tasks"],"forbidden_tools":["add_task"],"assertions":{"write_effect_count":0},"max_steps":4}
+{"id":"func-004","category":"functional","prompt":"先创建任务“补充 Tool 测试”，再列出任务并确认它存在。","expected_tools":["add_task","list_tasks"],"assertions":{"ordered_calls":["add_task","list_tasks"],"final_contains":"补充 Tool 测试"},"max_steps":6}
+{"id":"func-005","category":"functional","prompt":"计算 7.5 加 2.25。","expected_tools":["add_numbers"],"assertions":{"final_contains":"9.75"},"max_steps":4}
+{"id":"func-006","category":"functional","prompt":"把“   设计 Eval   ”作为一个任务创建，标题应去除首尾空格。","expected_tools":["add_task"],"assertions":{"created_title":"设计 Eval"},"max_steps":4}
+{"id":"func-007","category":"functional","prompt":"告诉我今天课程有多少讲。不要调用与问题无关的任务工具。","expected_tools":[],"forbidden_tools":["add_task","list_tasks","add_numbers"],"assertions":{"final_contains":"16","tool_call_count":0},"max_steps":2}
+{"id":"func-008","category":"functional","prompt":"创建两个独立任务：“检查 Trace”和“检查预算”，然后列出它们。","expected_tools":["add_task","list_tasks"],"assertions":{"created_count":2,"listed_titles":["检查 Trace","检查预算"]},"max_steps":8}
+{"id":"func-009","category":"functional","prompt":"把 0 与 -8 相加，并解释你使用了哪个工具。","expected_tools":["add_numbers"],"assertions":{"final_contains":"-8","trace_mentions":"add_numbers"},"max_steps":4}
+{"id":"func-010","category":"functional","prompt":"尝试创建空标题任务；如果工具拒绝，明确报告失败且不要假装已创建。","expected_tools":["add_task"],"assertions":{"created_count":0,"final_reports_failure":true},"max_steps":4}
+{"id":"func-011","category":"functional","prompt":"列出任务两次并说明两次读取是否一致，不做任何写入。","expected_tools":["list_tasks"],"forbidden_tools":["add_task"],"assertions":{"read_call_count":2,"write_effect_count":0},"max_steps":6}
+{"id":"func-012","category":"functional","prompt":"先算 12 加 30，再创建一个标题为“结果 42”的任务。","expected_tools":["add_numbers","add_task"],"assertions":{"ordered_calls":["add_numbers","add_task"],"created_title":"结果 42"},"max_steps":6}
